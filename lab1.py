@@ -25,7 +25,7 @@ def get_calc(data, year_label):
     """
     Вычисляет и выводит основные числовые характеристики выборки.
     """
-    print(f"\nЧисловые характеристики для {year_label}")
+    print(f"\nЧисловые характеристики в {year_label}")
     # 1.1 Среднее выборочное
     sample_mean = np.mean(data)
     print(f"1.1 Среднее выборочное: {sample_mean:.3f}")
@@ -105,7 +105,7 @@ def plot_density_and_estimates(data, year_label, theoretical_pdf_func):
     semi_sum_quartiles = (q1 + q3) / 2
     semi_sum_extremes = (min_val + max_val) / 2
 
-    print(f"\n Оценка плотности и точечные оценки для {year_label}")
+    print(f"\n Оценка плотности и точечные оценки в {year_label}")
 
     # Оценивает отклонение эмпирической плотности распределения от теоретической плотности
     plt.figure(figsize=(10, 6))
@@ -125,7 +125,7 @@ def plot_density_and_estimates(data, year_label, theoretical_pdf_func):
     print(f"Параметры нормального распределения, подобранные методом наименьших квадратов: "
           f"mu={fitted_params[0]:.3f}, sigma={fitted_params[1]:.3f}")
 
-    plt.title(f'Сравнение эмпирической и теоретической плотности для {year_label}', fontsize=16)
+    plt.title(f'Сравнение эмпирической и теоретической плотности в {year_label}', fontsize=16)
     plt.xlabel('Ожидаемая продолжительность жизни, лет', fontsize=12)
     plt.ylabel('Плотность', fontsize=12)
     plt.legend(fontsize=10)
@@ -146,7 +146,7 @@ def plot_density_and_estimates(data, year_label, theoretical_pdf_func):
     plt.plot(semi_sum_extremes, y_pos, 's', color='purple', markersize=10,
              label=f'Полусумма экстремумов ({semi_sum_extremes:.2f})')
 
-    plt.title(f'Точечные оценки среднего для {year_label}', fontsize=16)
+    plt.title(f'Точечные оценки среднего в {year_label}', fontsize=16)
     plt.xlabel('Ожидаемая продолжительность жизни, лет', fontsize=12)
     plt.yticks([])  # Убираем метки на оси Y
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
@@ -181,26 +181,6 @@ if __name__ == '__main__':
 
     values_1990 = np.array(values_1990, dtype=float)
     values_2022 = np.array(values_2022, dtype=float)
-
-    # 1. Корреляция между годами
-    # Корреляция между ОПЖ регионов в 1990 и 2022 годах
-    print("\nКорреляция между ОПЖ регионов в 1990 и 2022 годах")
-
-    correlation_1990_2022, p_value_corr = stats.pearsonr(values_1990, values_2022)
-    print(f"Коэффициент корреляции Пирсона между ОПЖ регионов в 1990 и 2022 годами {correlation_1990_2022:.4f}")
-    print(f"p-значение для корреляции: {p_value_corr:.4f}")
-    if p_value_corr < 0.05:
-        print("Корреляция статистически значима")
-    else:
-        print("Корреляция статистически не значима")
-
-    plt.figure(figsize=(8, 6))
-    sns.scatterplot(x=values_1990, y=values_2022, s=50, alpha=0.7)
-    plt.title('Корреляция ОПЖ регионов: 1990 и 2022 годы', fontsize=16)
-    plt.xlabel('ОПЖ в 1990 году, лет', fontsize=12)
-    plt.ylabel('ОПЖ в 2022 году, лет', fontsize=12)
-    plt.grid(True, linestyle=':', alpha=0.7)
-    plt.show()
 
     # Анализ для 1990 года
     print("Анализ данных за 1990 год")
@@ -294,3 +274,23 @@ if __name__ == '__main__':
     print(f"{confidence_level * 100}% ДИ для дисперсии: ({ci_var_2022[0]:.3f}, {ci_var_2022[1]:.3f})")
     print(
         f"{confidence_level * 100}% ДИ для стандартного отклонения: ({np.sqrt(ci_var_2022[0]):.3f}, {np.sqrt(ci_var_2022[1]):.3f})")
+
+    # Корреляция между годами
+    # Корреляция между ОПЖ регионов в 1990 и 2022 годах
+    print("\nКорреляция между ОПЖ регионов в 1990 и 2022 годах")
+
+    correlation_1990_2022, p_value_corr = stats.pearsonr(values_1990, values_2022)
+    print(f"Коэффициент корреляции Пирсона между ОПЖ регионов в 1990 и 2022 годами {correlation_1990_2022:.4f}")
+    print(f"p-значение для корреляции: {p_value_corr:.4f}")
+    if p_value_corr < 0.05:
+        print("Корреляция статистически значима")
+    else:
+        print("Корреляция статистически не значима")
+
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(x=values_1990, y=values_2022, s=50, alpha=0.7)
+    plt.title('Корреляция ОПЖ регионов: 1990 и 2022 годы', fontsize=16)
+    plt.xlabel('ОПЖ в 1990 году, лет', fontsize=12)
+    plt.ylabel('ОПЖ в 2022 году, лет', fontsize=12)
+    plt.grid(True, linestyle=':', alpha=0.7)
+    plt.show()
